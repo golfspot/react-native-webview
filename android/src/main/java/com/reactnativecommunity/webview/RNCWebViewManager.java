@@ -1315,6 +1315,17 @@ public class RNCWebViewManager extends SimpleViewManager<WebView> {
     public boolean onCreateWindow(WebView view, boolean isDialog, boolean isUserGesture, Message resultMsg) {
 
       final WebView newWebView = new WebView(view.getContext());
+      // nick add start
+      final Dialog dialog = new Dialog(view.getContext());
+      dialog.setContentView(newWebView);
+      dialog.show();
+      newWebView.setWebChromeClient(new WebChromeClient() {
+          @Override
+          public void onCloseWindow(WebView window) {
+              dialog.dismiss();
+          }
+      });
+      // nick add end
       final WebView.WebViewTransport transport = (WebView.WebViewTransport) resultMsg.obj;
       transport.setWebView(newWebView);
       resultMsg.sendToTarget();
